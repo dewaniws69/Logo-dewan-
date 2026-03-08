@@ -1,0 +1,17 @@
+{
+  "name": "IWS DEWAN 69 — โหวตโลโก้สภานักเรียน",
+  "short_name": "IWS โหวตโลโก้",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#070d1a",
+  "theme_color": "#0d1628",
+  "lang": "th",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
