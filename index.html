@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IWS DEWAN 69 — เลือกตั้งสภานักเรียน</title>
+<title>IWS DEWAN 69 — โหวตโลโก้สภานักเรียน</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Cinzel:wght@600;700&display=swap');
 
@@ -223,31 +223,30 @@ body::before{
       </svg>
     </div>
     <h1>DEWAN 69</h1>
-    <p class="sub">IBTIDA WITTAYA SCHOOL — STUDENT COUNCIL ELECTION</p>
+    <p class="sub">IBTIDA WITTAYA SCHOOL — STUDENT COUNCIL LOGO VOTE</p>
     <div class="divl"></div>
-    <p class="tag">เลือกผู้นำที่คุณไว้วางใจ &nbsp;•&nbsp; 1 คน 1 สิทธิ์</p>
+    <p class="tag">เลือกโลโก้สภานักเรียนที่คุณชอบ &nbsp;•&nbsp; 1 คน 1 โหวต</p>
   </div>
 
   <div class="live"><div class="dot"></div><span>LIVE RESULTS</span><span>•</span><span id="upd">กำลังโหลด...</span></div>
-  <div class="notice" id="notice">✓ คุณได้ใช้สิทธิ์โหวตแล้ว — ขอบคุณที่ร่วมเลือกตั้ง 🙏</div>
+  <div class="notice" id="notice">✓ คุณได้โหวตโลโก้แล้ว — ขอบคุณที่ร่วมโหวต 🙏</div>
 
   <!-- ADMIN -->
-  <div class="adm-toggle"><button onclick="toggleAdm()">⚙️ &nbsp;จัดการรูปผู้สมัคร (Admin)</button></div>
+  <div class="adm-toggle"><button onclick="toggleAdm()">⚙️ &nbsp;จัดการโลโก้ (Admin)</button></div>
   <div class="adm-panel" id="admPanel">
-    <p class="adm-title">👤 รายชื่อผู้สมัคร</p>
+    <p class="adm-title">🖼️ รายชื่อโลโก้</p>
 
-    <!-- Name list: always visible -->
-    <div id="nameList" style="margin-bottom:14px;"></div>
-    <button onclick="addSlot()" style="width:100%;padding:8px;border-radius:10px;border:1.5px dashed rgba(74,124,200,.35);background:transparent;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:.82rem;cursor:pointer;margin-bottom:16px;transition:all .2s;" onmouseover="this.style.borderColor='rgba(74,124,200,.7)';this.style.color='var(--silver2)'" onmouseout="this.style.borderColor='rgba(74,124,200,.35)';this.style.color='var(--muted)'">+ เพิ่มผู้สมัคร</button>
+    <!-- Name list: hidden, managed via photo preview inputs -->
+    <div id="nameList" style="display:none;"></div>
 
-    <p class="adm-title" style="margin-top:4px;">📁 อัปโหลดรูป</p>
+    <p class="adm-title" style="margin-top:4px;">📁 อัปโหลดโลโก้</p>
     <div class="uzone" id="uzone" onclick="document.getElementById('fi').click()">
       <input type="file" id="fi" accept="image/*" multiple onchange="handleFiles(this.files)">
-      <p><strong>คลิกเพื่อเลือกรูป</strong> หรือลากมาวางที่นี่<br><span style="font-size:.7rem">รองรับหลายรูปพร้อมกัน • รูปจะจับคู่กับชื่อตามลำดับ</span></p>
+      <p><strong>คลิกเพื่อเลือกโลโก้</strong> หรือลากมาวางที่นี่<br><span style="font-size:.7rem">รองรับหลายรูปพร้อมกัน • รูปจะจับคู่กับชื่อตามลำดับ</span></p>
     </div>
     <div class="prev-grid" id="prevGrid"></div>
 
-    <p class="adm-hint">💡 ใส่ชื่อผู้สมัครก่อน → อัปโหลดรูปตามลำดับ → กด "บันทึก"</p>
+    <p class="adm-hint">💡 ใส่ชื่อโลโก้ก่อน → อัปโหลดรูปตามลำดับ → กด "บันทึก"</p>
     <button class="btn-apply" onclick="applyPhotos()">✓ บันทึกและแสดงผล</button>
   </div>
 
@@ -256,8 +255,8 @@ body::before{
 
   <div class="results">
     <div class="rtop">
-      <span class="rtitle">📊 ผลคะแนนเรียลไทม์</span>
-      <span class="rtotal">รวม <b id="tot">0</b> เสียง</span>
+      <span class="rtitle">📊 ผลโหวตเรียลไทม์</span>
+      <span class="rtotal">รวม <b id="tot">0</b> โหวต</span>
     </div>
     <div id="chart"></div>
   </div>
@@ -270,12 +269,12 @@ const SK_VOTES='iws69_votes', LK_VOTED='iws69_voted', LK_MYID='iws69_myid', LK_P
 let photos=[], candNames=[], candidates=[], votes={};
 let hasVoted=false, myVoteId=null, pendingId=null, mStep=1;
 
-/* ── CANDIDATES ── */
+/* ── LOGOS ── */
 function buildCandidates(){
   const n=Math.max(photos.length, candNames.filter(n=>n&&n.trim()).length, 1);
   candidates=Array.from({length:n},(_,i)=>({
     id:i+1,
-    name:candNames[i]&&candNames[i].trim()?candNames[i].trim():`ผู้สมัครหมายเลข ${i+1}`,
+    name:candNames[i]&&candNames[i].trim()?candNames[i].trim():`โลโก้หมายเลข ${i+1}`,
     photo:photos[i]||null
   }));
   candidates.forEach(c=>{if(!(c.id in votes))votes[c.id]=0;});
@@ -287,7 +286,7 @@ function renderNameList(){
     <div class="name-row">
       <div class="name-row-num">${i+1}</div>
       <input class="name-row-input" type="text"
-        placeholder="ชื่อผู้สมัครหมายเลข ${i+1}..."
+        placeholder="ชื่อโลโก้หมายเลข ${i+1}..."
         value="${candNames[i]||''}"
         oninput="candNames[${i}]=this.value"
         maxlength="40">
@@ -313,7 +312,11 @@ function toggleAdm(){document.getElementById('admPanel').classList.toggle('open'
 function handleFiles(files){
   Array.from(files).forEach(f=>{
     const r=new FileReader();
-    r.onload=e=>{photos.push(e.target.result);if(photos.length>candNames.length)candNames.push('');renderNameList();renderPrev();};
+    r.onload=e=>{
+      photos.push(e.target.result);
+      if(photos.length>candNames.length) candNames.push('');
+      renderPrev();
+    };
     r.readAsDataURL(f);
   });
 }
@@ -333,18 +336,29 @@ function renderPrev(){
       <button class="rx" onclick="rmPhoto(${i})">✕</button>
       <div class="pn">เบอร์ ${i+1}</div>
       <input class="name-in" type="text"
-        placeholder="ชื่อ..."
+        placeholder="ชื่อโลโก้..."
         value="${candNames[i]||''}"
         oninput="candNames[${i}]=this.value"
         maxlength="30">
-    </div>`).join('');
+    </div>`).join('')+
+    `<div class="prev-item" style="display:flex;align-items:center;justify-content:center;width:120px;min-height:100px;">
+      <button onclick="addPhotoSlot()" style="width:58px;height:58px;border-radius:50%;border:2px dashed rgba(74,124,200,.4);background:rgba(74,124,200,.07);color:var(--muted);font-size:1.4rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.borderColor='rgba(74,124,200,.75)';this.style.color='var(--silver2)'" onmouseout="this.style.borderColor='rgba(74,124,200,.4)';this.style.color='var(--muted)'">+</button>
+    </div>`;
+}
+
+function addPhotoSlot(){
+  candNames.push('');
+  photos.push('');
+  renderPrev();
 }
 
 function rmPhoto(i){photos.splice(i,1);candNames.splice(i,1);renderPrev();}
 
 function applyPhotos(){
-  // read latest name values from inputs
-  document.querySelectorAll('.name-row-input').forEach((el,i)=>candNames[i]=el.value);
+  // read latest name values from name-in inputs (primary source)
+  document.querySelectorAll('.name-in').forEach((el,i)=>{ if(i<photos.length) candNames[i]=el.value; });
+  // remove empty-photo placeholder slots
+  for(let i=photos.length-1;i>=0;i--){ if(!photos[i]){ photos.splice(i,1); candNames.splice(i,1); } }
   try{
     localStorage.setItem(LK_PHOTOS,JSON.stringify(photos));
     localStorage.setItem('iws69_names',JSON.stringify(candNames));
@@ -387,19 +401,19 @@ function checkLocal(){
   }catch(e){}
 }
 
-/* ── SIL (person silhouette) ── */
+/* ── SIL (logo placeholder) ── */
 function sil(s=44){return `<div class="sil" style="width:${s}px;height:${s}px;"><svg width="${s}" height="${s}" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="34" r="20" fill="rgba(180,200,240,.28)"/><path d="M15 95 Q15 62 50 62 Q85 62 85 95" fill="rgba(180,200,240,.22)"/></svg></div>`;}
 
 /* ── GRID ── */
 function renderGrid(){
-  document.getElementById('secLbl').textContent=candidates.length?'— เลือกผู้สมัคร —':'— ยังไม่มีผู้สมัคร —';
+  document.getElementById('secLbl').textContent=candidates.length?'— เลือกโลโก้ —':'— ยังไม่มีโลโก้ —';
   document.getElementById('grid').innerHTML=candidates.map(c=>{
     const mine=hasVoted&&myVoteId===c.id, off=hasVoted&&!mine;
     const ph=c.photo?`<img src="${c.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">`:`${sil(96)}`;
     return `<div class="ccard ${mine?'mine':''} ${off?'off':''}" onclick="${!hasVoted?`openM(${c.id})`:''}">
       <div class="pring" style="width:96px;height:96px;">${ph}<div class="pring-b"></div><div class="nbadge">${c.id}</div></div>
       <div class="cname">${c.name}</div>
-      ${mine?`<div class="bdgv">✓ คุณเลือกคนนี้</div>`:off?`<div style="font-size:.72rem;color:var(--muted)">ไม่สามารถเปลี่ยนได้</div>`:`<button class="btnv" onclick="event.stopPropagation();openM(${c.id})">เลือก</button>`}
+      ${mine?`<div class="bdgv">✓ คุณเลือกโลโก้นี้</div>`:off?`<div style="font-size:.72rem;color:var(--muted)">ไม่สามารถเปลี่ยนได้</div>`:`<button class="btnv" onclick="event.stopPropagation();openM(${c.id})">โหวต</button>`}
     </div>`;
   }).join('');
 }
@@ -428,7 +442,7 @@ function renderChart(){
           ${lead?`<span style="font-size:.65rem;background:rgba(74,124,200,.2);border:1px solid rgba(74,124,200,.4);border-radius:8px;padding:2px 8px;color:#80b8ff;margin-left:6px;">🏆 นำอยู่</span>`:''}
           ${myChoice?`<span style="font-size:.65rem;background:rgba(76,218,122,.15);border:1px solid rgba(76,218,122,.35);border-radius:8px;padding:2px 8px;color:var(--green);margin-left:6px;">✓ คุณโหวต</span>`:''}
         </div>
-        <span class="rct"><b>${v}</b> เสียง (${pct}%)</span>
+        <span class="rct"><b>${v}</b> โหวต (${pct}%)</span>
       </div>
       <div class="track">
         <div class="fill ${lead?'lead':'rest'}" style="width:${barW}%"></div>
@@ -449,12 +463,12 @@ function renderM(){
   document.getElementById('mN').textContent=c.name;
   if(mStep===1){
     document.getElementById('mH').textContent='คุณต้องการโหวตให้';
-    document.getElementById('mT').textContent='ตรวจสอบผู้สมัครก่อนดำเนินการต่อ';
+    document.getElementById('mT').textContent='ตรวจสอบโลโก้ก่อนดำเนินการต่อ';
     document.getElementById('mW').textContent='';
     document.getElementById('mB').innerHTML=`<button class="bcl" onclick="closeM()">ยกเลิก</button><button class="bnx" onclick="nxt()">ถัดไป →</button>`;
   } else {
     document.getElementById('mH').textContent='ยืนยันอีกครั้ง';
-    document.getElementById('mT').textContent='แน่ใจหรือไม่ว่าต้องการลงคะแนนให้ผู้สมัครนี้?';
+    document.getElementById('mT').textContent='แน่ใจหรือไม่ว่าต้องการโหวตให้โลโก้นี้?';
     document.getElementById('mW').textContent='⚠️ ไม่สามารถเปลี่ยนแปลงได้ภายหลัง';
     document.getElementById('mB').innerHTML=`<button class="bcl" onclick="prv()">← ย้อนกลับ</button><button class="bok" onclick="confirmVote()">ยืนยันโหวต ✓</button>`;
   }
@@ -475,7 +489,7 @@ async function confirmVote(){
   await saveVoteFor(id);
   document.getElementById('notice').classList.add('show');
   renderGrid(); renderChart();
-  showToast('✓ ลงคะแนนเรียบร้อย ขอบคุณ!','ok');
+  showToast('✓ โหวตเรียบร้อย ขอบคุณ!','ok');
 }
 
 /* ── TOAST ── */
@@ -492,9 +506,6 @@ async function poll(){await loadVotes();renderChart();renderGrid();}
 async function init(){
   checkLocal();
   await loadVotes();
-  // ensure at least 1 slot
-  if(candNames.length===0) candNames.push('');
-  renderNameList();
   buildCandidates();
   renderPrev();
   if(hasVoted)document.getElementById('notice').classList.add('show');
