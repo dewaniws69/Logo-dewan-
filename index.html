@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IWS DEWAN 69 — โหวตโลโก้สภานักเรียน</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icon.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon.png">
+<link rel="apple-touch-icon" sizes="512x512" href="icon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&family=Cinzel:wght@600;700&display=swap');
+
+:root {
+  --navy:   #070d1a;
+  --navy2:  #0d1628;
+  --navy3:  #131e38;
+  --navy4:  #1a2848;
+  --silver: #c8d8f0;
+  --silver2:#e8f0ff;
+  --accent: #4a7cc8;
+  --text:   #dde8ff;
+  --muted:  #6070a0;
+  --green:  #4cda7a;
+  --gold:   #d4a94e;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--navy);color:var(--text);font-family:'Sarabun',sans-serif;min-height:100vh;}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 20%,rgba(180,210,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 78% 14%,rgba(180,210,255,.4) 0%,transparent 100%),
+    radial-gradient(1px 1px at 52% 65%,rgba(180,210,255,.3) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 6% 80%,rgba(180,210,255,.3) 0%,transparent 100%),
+    radial-gradient(1px 1px at 90% 48%,rgba(180,210,255,.25) 0%,transparent 100%);
+  pointer-events:none;z-index:0;
+}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:28px 18px 80px;}
+
+/* HEADER */
+.hdr{text-align:center;margin-bottom:28px;animation:fd .7s ease both;}
+.logo-svg{width:96px;height:96px;display:inline-block;margin-bottom:12px;filter:drop-shadow(0 0 18px rgba(80,130,220,.55));}
+.hdr h1{font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:.22em;color:var(--silver2);margin-bottom:3px;}
+.hdr .sub{font-size:.74rem;color:var(--muted);letter-spacing:.1em;margin-bottom:12px;}
+.divl{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:10px auto 12px;}
+.hdr .tag{font-size:.78rem;color:var(--muted);}
+
+/* LIVE */
+.live{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px;font-size:.7rem;color:var(--muted);letter-spacing:.12em;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:blink 1.6s infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+
+/* NOTICE */
+.notice{display:none;text-align:center;background:rgba(76,218,122,.07);border:1px solid rgba(76,218,122,.25);border-radius:12px;padding:11px 18px;margin-bottom:18px;font-size:.8rem;color:var(--green);}
+.notice.show{display:block;}
+
+/* ADMIN */
+.adm-toggle{display:flex;align-items:center;justify-content:center;margin-bottom:16px;gap:10px;}
+.adm-toggle button{background:transparent;border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:6px 18px;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:.72rem;cursor:pointer;letter-spacing:.1em;transition:all .2s;}
+.adm-toggle button:hover{border-color:rgba(255,255,255,.22);color:var(--text);}
+/* Admin fixed top-left */
+.adm-fixed{position:fixed;top:14px;left:14px;z-index:200;
+  padding:7px 14px;border-radius:20px;
+  border:1px solid rgba(212,169,78,.35);
+  background:rgba(13,22,40,.8);backdrop-filter:blur(8px);
+  color:var(--gold);font-family:'Sarabun',sans-serif;font-size:.72rem;
+  cursor:pointer;letter-spacing:.1em;transition:all .25s;}
+.adm-fixed:hover{border-color:var(--gold);background:rgba(212,169,78,.1);}
+
+.adm-panel{background:linear-gradient(160deg,var(--navy3),var(--navy2));border:1.5px solid rgba(212,169,78,.22);border-radius:18px;padding:20px 18px;margin-bottom:26px;display:none;}
+.adm-panel.open{display:block;animation:fd .3s ease both;}
+.adm-title{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+
+.uzone{border:2px dashed rgba(74,124,200,.3);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:all .25s;background:rgba(74,124,200,.04);margin-bottom:10px;}
+.uzone:hover{border-color:rgba(74,124,200,.6);background:rgba(74,124,200,.08);}
+.uzone input{display:none;}
+.uzone p{font-size:.78rem;color:var(--muted);line-height:1.7;}
+.uzone strong{color:var(--silver2);}
+
+.prev-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+.prev-item{position:relative;width:120px;text-align:center;margin-bottom:4px;}
+.prev-item img{width:58px;height:58px;border-radius:50%;object-fit:cover;border:2px solid rgba(74,124,200,.38);display:block;margin:0 auto 3px;}
+.prev-item .rx{position:absolute;top:-2px;right:0;width:18px;height:18px;border-radius:50%;background:#b03030;border:none;color:#fff;font-size:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.prev-item .pn{font-size:.65rem;color:var(--muted);}
+.name-in{
+  width:100%;margin-top:7px;
+  background:rgba(255,255,255,.07);
+  border:1.5px solid rgba(74,124,200,.3);
+  border-radius:8px;padding:6px 8px;
+  color:var(--silver2);font-family:'Sarabun',sans-serif;
+  font-size:.78rem;text-align:center;outline:none;
+  transition:border-color .2s, background .2s;
+}
+.name-in::placeholder{color:var(--muted);}
+.name-in:focus{border-color:rgba(74,124,200,.7);background:rgba(74,124,200,.1);}
+
+.btn-apply{width:100%;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),#2a5a9a);color:#fff;font-family:'Sarabun',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;transition:all .22s;margin-top:10px;}
+.btn-apply:hover{opacity:.85;}
+.adm-hint{font-size:.7rem;color:var(--muted);margin-top:8px;line-height:1.6;}
+.name-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.name-row-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#2a5a9a);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#fff;flex-shrink:0;font-family:'Cinzel',serif;}
+.name-row-input{flex:1;background:rgba(255,255,255,.06);border:1.5px solid rgba(74,124,200,.25);border-radius:10px;padding:9px 13px;color:var(--silver2);font-family:'Sarabun',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s,background .2s;}
+.name-row-input::placeholder{color:var(--muted);}
+.name-row-input:focus{border-color:rgba(74,124,200,.65);background:rgba(74,124,200,.08);}
+.name-row-del{width:28px;height:28px;border-radius:50%;background:rgba(180,50,50,.2);border:1px solid rgba(180,50,50,.3);color:#f08080;font-size:.7rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.name-row-del:hover{background:rgba(180,50,50,.4);}
+
+/* SECTION */
+.sec{text-align:center;font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+
+/* GRID */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:34px;}
+
+.ccard{background:linear-gradient(160deg,var(--navy3),var(--navy2));border:1.5px solid rgba(74,124,200,.18);border-radius:18px;padding:20px 14px 16px;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+.ccard::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(74,124,200,.1),transparent);opacity:0;transition:opacity .3s;}
+.ccard:hover{border-color:rgba(74,124,200,.55);transform:translateY(-4px);box-shadow:0 10px 32px rgba(74,124,200,.15);}
+.ccard:hover::after{opacity:1;}
+.ccard.mine{border-color:var(--green);box-shadow:0 0 22px rgba(76,218,122,.14);cursor:default;transform:none;}
+.ccard.mine::after{background:linear-gradient(160deg,rgba(76,218,122,.07),transparent);opacity:1;}
+.ccard.off{opacity:.4;cursor:not-allowed;transform:none;}
+.ccard.off:hover{border-color:rgba(74,124,200,.18);box-shadow:none;}
+.ccard.off::after{opacity:0!important;}
+
+.pring{width:96px;height:96px;border-radius:50%;margin:0 auto 12px;position:relative;overflow:hidden;}
+.pring img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;}
+.pring-b{position:absolute;inset:0;border-radius:50%;border:2.5px solid rgba(74,124,200,.3);transition:border-color .3s;}
+.ccard:hover .pring-b{border-color:rgba(74,124,200,.65);}
+.ccard.mine .pring-b{border-color:var(--green);}
+.sil{width:100%;height:100%;background:linear-gradient(160deg,var(--navy4),var(--navy3));border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.nbadge{position:absolute;bottom:2px;right:2px;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#2a5a9a);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#fff;border:2px solid var(--navy2);font-family:'Cinzel',serif;}
+.cname{font-size:.86rem;font-weight:700;color:var(--silver2);margin-bottom:12px;}
+.btnv{display:inline-block;padding:7px 18px;border-radius:18px;border:1.5px solid var(--accent);background:rgba(74,124,200,.13);color:var(--silver2);font-family:'Sarabun',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;transition:all .22s;}
+.btnv:hover{background:rgba(74,124,200,.3);box-shadow:0 0 14px rgba(74,124,200,.28);}
+.bdgv{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:18px;background:rgba(76,218,122,.11);border:1.5px solid var(--green);color:var(--green);font-size:.76rem;font-weight:600;}
+
+/* RESULTS */
+.results{background:linear-gradient(160deg,var(--navy3),var(--navy2));border:1.5px solid rgba(74,124,200,.15);border-radius:20px;padding:24px 20px;}
+.rtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.rtitle{font-family:'Cinzel',serif;font-size:.76rem;letter-spacing:.15em;color:var(--silver);}
+.rtotal{font-size:.72rem;color:var(--muted);}
+.rtotal b{color:var(--silver2);}
+.rrow{margin-bottom:16px;}
+.rmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.rleft{display:flex;align-items:center;gap:8px;}
+.mini{width:28px;height:28px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(74,124,200,.26);flex-shrink:0;}
+.mini img{width:100%;height:100%;object-fit:cover;}
+.msil{width:28px;height:28px;border-radius:50%;background:var(--navy4);display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(74,124,200,.26);flex-shrink:0;}
+.rname{font-size:.83rem;font-weight:600;color:var(--silver2);}
+.rct{font-size:.73rem;color:var(--muted);}
+.rct b{color:var(--silver);}
+.track{height:8px;border-radius:4px;background:rgba(255,255,255,.05);overflow:hidden;}
+.fill{height:100%;border-radius:4px;transition:width .85s cubic-bezier(.4,0,.2,1);}
+.fill.lead{background:linear-gradient(90deg,var(--accent),#80b8ff);box-shadow:0 0 10px rgba(74,124,200,.4);}
+.fill.rest{background:linear-gradient(90deg,#1e3060,#2c4480);}
+
+/* MODAL */
+.ov{position:fixed;inset:0;background:rgba(3,6,15,.9);backdrop-filter:blur(8px);z-index:60;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+.ov.open{opacity:1;pointer-events:all;}
+.modal{background:linear-gradient(160deg,#131e38,#080e1e);border:1.5px solid rgba(74,124,200,.32);border-radius:24px;padding:30px 26px;max-width:370px;width:92%;text-align:center;box-shadow:0 22px 60px rgba(0,0,0,.7);transform:scale(.88) translateY(14px);transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.ov.open .modal{transform:scale(1) translateY(0);}
+.mdots{display:flex;justify-content:center;gap:8px;margin-bottom:16px;}
+.mdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.12);transition:all .3s;}
+.mdot.on{background:var(--accent);box-shadow:0 0 8px var(--accent);}
+.mph{width:86px;height:86px;border-radius:50%;margin:0 auto 12px;overflow:hidden;border:2.5px solid rgba(74,124,200,.36);box-shadow:0 0 20px rgba(74,124,200,.26);}
+.mph img{width:100%;height:100%;object-fit:cover;}
+.mph-sil{width:86px;height:86px;border-radius:50%;background:var(--navy4);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;border:2.5px solid rgba(74,124,200,.36);}
+.mh{font-family:'Cinzel',serif;font-size:.88rem;color:var(--silver2);margin-bottom:5px;letter-spacing:.1em;}
+.mn{font-size:.98rem;font-weight:700;color:var(--silver2);background:rgba(74,124,200,.1);border:1px solid rgba(74,124,200,.24);border-radius:10px;padding:8px 16px;margin:10px 0 8px;display:block;}
+.mt{font-size:.76rem;color:var(--muted);line-height:1.6;margin-bottom:5px;}
+.mw{font-size:.68rem;color:#e09050;margin-bottom:18px;}
+.mbtns{display:flex;gap:10px;justify-content:center;}
+.bcl{padding:9px 20px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:transparent;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:.82rem;cursor:pointer;transition:all .2s;}
+.bcl:hover{border-color:rgba(255,255,255,.24);color:var(--text);}
+.bnx{padding:9px 22px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),#2a5a9a);color:#fff;font-family:'Sarabun',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(74,124,200,.36);transition:all .22s;}
+.bnx:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(74,124,200,.5);}
+.bok{padding:9px 22px;border-radius:10px;border:none;background:linear-gradient(135deg,#2a8a50,#175a2e);color:#fff;font-family:'Sarabun',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(76,218,122,.2);transition:all .22s;}
+.bok:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(76,218,122,.36);}
+
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy3);border:1px solid rgba(74,124,200,.36);border-radius:14px;padding:11px 22px;font-size:.83rem;color:var(--silver2);box-shadow:0 8px 28px rgba(0,0,0,.4);transition:transform .36s cubic-bezier(.4,0,.2,1);z-index:99;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+.toast.ok{border-color:rgba(76,218,122,.4);color:var(--green);}
+
+@keyframes fd{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.cgrid{grid-template-columns:repeat(2,1fr);}}
+
+/* ── LIGHT MODE (นุ่มตา ไม่จ้า) ── */
+body.light{
+  --navy:#e8edf5;--navy2:#dde4f0;--navy3:#d3daea;--navy4:#c4cfe0;
+  --silver:#2a3a6a;--silver2:#1e2e58;--accent:#3a6ab8;
+  --text:#1e2e58;--muted:#5a6a90;--green:#1a7a38;--gold:#a07010;
+}
+body.light{background:#e8edf5;}
+body.light::before{
+  background:
+    radial-gradient(1.5px 1.5px at 12% 20%,rgba(100,140,200,.25) 0%,transparent 100%),
+    radial-gradient(1px 1px at 78% 14%,rgba(100,140,200,.2) 0%,transparent 100%),
+    radial-gradient(1px 1px at 52% 65%,rgba(100,140,200,.15) 0%,transparent 100%);
+}
+body.light .ccard{background:linear-gradient(160deg,#d8e2f2,#cfd8ec);}
+body.light .results{background:linear-gradient(160deg,#d8e2f2,#cfd8ec);}
+body.light .adm-panel{background:linear-gradient(160deg,#d8e2f2,#cfd8ec);}
+body.light .modal{background:linear-gradient(160deg,#d3daea,#c8d2e8);}
+body.light .pin-box{background:linear-gradient(160deg,#d3daea,#c8d2e8);}
+body.light .countdown-box{background:rgba(100,140,200,.1);}
+body.light .toast{background:#d3daea;}
+
+/* ── THEME TOGGLE ── */
+.theme-btn{position:fixed;top:14px;right:14px;z-index:200;
+  width:38px;height:38px;border-radius:50%;border:1.5px solid rgba(74,124,200,.35);
+  background:rgba(13,22,40,.7);backdrop-filter:blur(8px);
+  color:var(--silver);font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .25s;}
+.theme-btn:hover{border-color:var(--accent);transform:scale(1.1);}
+
+/* ── COUNTDOWN ── */
+.countdown-box{
+  background:linear-gradient(135deg,rgba(74,124,200,.1),rgba(160,80,255,.08));
+  border:1.5px solid rgba(74,124,200,.28);border-radius:16px;
+  padding:14px 18px;margin-bottom:22px;text-align:center;
+}
+.cd-label{font-size:.65rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.cd-timer{display:flex;justify-content:center;gap:10px;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:700;color:var(--silver2);
+  background:rgba(74,124,200,.12);border:1px solid rgba(74,124,200,.2);
+  border-radius:8px;padding:4px 10px;min-width:48px;display:block;line-height:1.2;}
+.cd-lbl{font-size:.58rem;color:var(--muted);letter-spacing:.1em;margin-top:3px;display:block;}
+.cd-sep{font-size:1.4rem;color:var(--accent);font-weight:700;line-height:2.2;opacity:.6;}
+.countdown-box.ended{border-color:rgba(180,50,50,.4);background:rgba(180,50,50,.06);}
+.countdown-box.ended .cd-num{color:#f08080;border-color:rgba(180,50,50,.3);}
+
+/* ── PIE CHART ── */
+.pie-wrap{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;margin-bottom:18px;}
+.pie-svg{width:140px;height:140px;flex-shrink:0;}
+.pie-legend{display:flex;flex-direction:column;gap:7px;}
+.pie-item{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--silver);}
+.pie-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0;}
+
+/* ── WINNER BANNER ── */
+.winner-banner{
+  display:none;
+  background:linear-gradient(135deg,rgba(212,169,78,.15),rgba(74,124,200,.1));
+  border:2px solid var(--gold);border-radius:20px;
+  padding:22px 20px;margin-bottom:22px;text-align:center;
+  animation:winPulse 2s ease infinite;
+}
+.winner-banner.show{display:block;}
+@keyframes winPulse{0%,100%{box-shadow:0 0 20px rgba(212,169,78,.2);}50%{box-shadow:0 0 40px rgba(212,169,78,.5);}}
+.winner-crown{font-size:2rem;margin-bottom:6px;}
+.winner-title{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.2em;color:var(--gold);margin-bottom:4px;}
+.winner-name{font-size:1.2rem;font-weight:800;color:var(--silver2);margin-bottom:4px;}
+.winner-pct{font-size:.78rem;color:var(--muted);}
+
+/* ── REVEAL OVERLAY ── */
+.reveal-ov{position:fixed;inset:0;background:rgba(3,6,15,.97);z-index:500;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .4s;}
+.reveal-ov.active{opacity:1;pointer-events:all;}
+.reveal-inner{text-align:center;}
+.reveal-drum{font-size:5rem;animation:drumSpin 0.12s linear infinite;}
+@keyframes drumSpin{0%{transform:rotate(-8deg) scale(1.05);}50%{transform:rotate(8deg) scale(.95);}100%{transform:rotate(-8deg) scale(1.05);}}
+.reveal-label{font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.3em;color:var(--muted);margin-top:12px;animation:fadePulse 1s ease infinite;}
+@keyframes fadePulse{0%,100%{opacity:.4;}50%{opacity:1;}}
+.reveal-result{display:none;text-align:center;}
+.reveal-result .rr-photo{width:110px;height:110px;border-radius:50%;border:3px solid var(--gold);margin:0 auto 14px;overflow:hidden;box-shadow:0 0 40px rgba(212,169,78,.5);}
+.reveal-result .rr-photo img{width:100%;height:100%;object-fit:cover;}
+.reveal-result .rr-title{font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.25em;color:var(--gold);margin-bottom:6px;}
+.reveal-result .rr-name{font-size:1.4rem;font-weight:800;color:var(--silver2);margin-bottom:6px;}
+.reveal-result .rr-pct{font-size:.9rem;color:var(--muted);}
+.reveal-close{margin-top:20px;padding:10px 28px;border-radius:14px;border:1px solid rgba(212,169,78,.4);
+  background:rgba(212,169,78,.1);color:var(--gold);font-family:'Sarabun',sans-serif;
+  font-size:.82rem;cursor:pointer;transition:all .2s;}
+.reveal-close:hover{background:rgba(212,169,78,.25);}
+
+/* ── CONFETTI ── */
+#confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:400;}
+
+/* ── ADMIN RESET ── */
+.btn-reset{width:100%;padding:10px;border-radius:10px;border:1.5px solid rgba(180,50,50,.4);
+  background:rgba(180,50,50,.08);color:#f08080;font-family:'Sarabun',sans-serif;
+  font-size:.84rem;font-weight:700;cursor:pointer;transition:all .22s;margin-top:8px;}
+.btn-reset:hover{background:rgba(180,50,50,.2);border-color:rgba(180,50,50,.7);}
+
+/* ── ADMIN TIME LIMIT ── */
+.adm-time-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.adm-time-row label{font-size:.75rem;color:var(--muted);min-width:80px;}
+.adm-time-in{background:rgba(255,255,255,.07);border:1.5px solid rgba(74,124,200,.3);
+  border-radius:8px;padding:7px 10px;color:var(--silver2);font-family:'Sarabun',sans-serif;
+  font-size:.82rem;outline:none;width:180px;}
+.adm-time-in:focus{border-color:rgba(74,124,200,.65);}
+.btn-set-time{padding:8px 16px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--accent),#2a5a9a);
+  color:#fff;font-family:'Sarabun',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .22s;}
+.btn-set-time:hover{opacity:.85;}
+
+/* ── REVEAL BTN ── */
+.btn-reveal{display:block;width:100%;margin:12px 0 0;padding:11px;border-radius:12px;
+  border:1.5px solid rgba(212,169,78,.5);background:linear-gradient(135deg,rgba(212,169,78,.12),rgba(74,124,200,.08));
+  color:var(--gold);font-family:'Sarabun',sans-serif;font-size:.88rem;font-weight:700;
+  cursor:pointer;transition:all .25s;letter-spacing:.05em;}
+.btn-reveal:hover{background:linear-gradient(135deg,rgba(212,169,78,.25),rgba(74,124,200,.15));box-shadow:0 0 20px rgba(212,169,78,.2);}
+
+
+/* ── PIN MODAL ── */
+.pin-ov{position:fixed;inset:0;background:rgba(3,6,15,.92);backdrop-filter:blur(10px);
+  z-index:300;display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .25s;}
+.pin-ov.open{opacity:1;pointer-events:all;}
+.pin-box{background:linear-gradient(160deg,#131e38,#080e1e);
+  border:1.5px solid rgba(74,124,200,.4);border-radius:22px;
+  padding:30px 28px;max-width:320px;width:90%;text-align:center;
+  box-shadow:0 24px 60px rgba(0,0,0,.7);}
+.pin-icon{font-size:2rem;margin-bottom:8px;}
+.pin-title{font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.2em;
+  color:var(--silver2);margin-bottom:4px;}
+.pin-sub{font-size:.72rem;color:var(--muted);margin-bottom:18px;}
+.pin-input{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(74,124,200,.35);
+  border-radius:12px;padding:12px;color:var(--silver2);
+  font-family:'Cinzel',serif;font-size:1.4rem;letter-spacing:.4em;
+  text-align:center;outline:none;transition:border-color .2s;}
+.pin-input:focus{border-color:rgba(74,124,200,.75);}
+.pin-error{font-size:.74rem;color:#f08080;margin-top:8px;display:none;}
+.pin-btns{display:flex;gap:10px;margin-top:16px;}
+.pin-cancel{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
+  background:transparent;color:var(--muted);font-family:'Sarabun',sans-serif;
+  font-size:.82rem;cursor:pointer;transition:all .2s;}
+.pin-cancel:hover{border-color:rgba(255,255,255,.25);color:var(--text);}
+.pin-ok{flex:1;padding:10px;border-radius:10px;border:none;
+  background:linear-gradient(135deg,var(--accent),#2a5a9a);
+  color:#fff;font-family:'Sarabun',sans-serif;font-size:.82rem;
+  font-weight:700;cursor:pointer;transition:all .22s;}
+.pin-ok:hover{opacity:.85;}
+.adm-lock-btn{display:block;width:100%;margin-top:10px;padding:8px;
+  border-radius:9px;border:1px solid rgba(255,255,255,.1);background:transparent;
+  color:var(--muted);font-family:'Sarabun',sans-serif;font-size:.74rem;cursor:pointer;transition:all .2s;}
+.adm-lock-btn:hover{color:var(--text);border-color:rgba(255,255,255,.22);}
+
+</style>
+</head>
+<body>
+<button class="adm-fixed" onclick="promptAdmPin()">🔐 Admin</button>
+
+<!-- PIN MODAL -->
+<div class="pin-ov" id="pinModal">
+  <div class="pin-box">
+    <div class="pin-icon">🔐</div>
+    <div class="pin-title">Admin Access</div>
+    <div class="pin-sub">กรุณาใส่รหัสผ่าน</div>
+    <input class="pin-input" id="pinInput" type="password" maxlength="10"
+      placeholder="••••"
+      onkeydown="if(event.key==='Enter')submitPin()">
+    <div class="pin-error" id="pinError">❌ รหัสผ่านไม่ถูกต้อง</div>
+    <div class="pin-btns">
+      <button class="pin-cancel" onclick="closePinModal()">ยกเลิก</button>
+      <button class="pin-ok" onclick="submitPin()">เข้าสู่ระบบ</button>
+    </div>
+  </div>
+</div>
+
+<!-- Theme Toggle -->
+<button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="เปลี่ยนธีม">🌙</button>
+
+<!-- Confetti canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Reveal overlay -->
+<div class="reveal-ov" id="revealOv">
+  <div class="reveal-inner" id="revealInner">
+    <div style="font-size:5rem;" id="revealDrum">🎰</div>
+    <div style="font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.3em;color:var(--muted);margin-top:12px;" id="revealLabel">กำลังลุ้น...</div>
+  </div>
+  <div class="reveal-result" id="revealResult">
+    <div class="rr-photo" id="rrPhoto"></div>
+    <div class="rr-title">🏆 ผู้ชนะ</div>
+    <div class="rr-name" id="rrName"></div>
+    <div class="rr-pct" id="rrPct"></div>
+    <button class="reveal-close" onclick="closeReveal()">ปิด</button>
+  </div>
+</div>
+
+<!-- Winner banner -->
+<div class="winner-banner" id="winnerBanner">
+  <div class="winner-crown">👑</div>
+  <div class="winner-title">ผู้ชนะ</div>
+  <div class="winner-name" id="winnerName">—</div>
+  <div class="winner-pct" id="winnerPct"></div>
+</div>
+
+
+<div class="ov" id="ov">
+  <div class="modal">
+    <div class="mdots"><div class="mdot on" id="d1"></div><div class="mdot" id="d2"></div></div>
+    <div id="mPh"></div>
+    <p class="mh" id="mH"></p>
+    <span class="mn" id="mN"></span>
+    <p class="mt" id="mT"></p>
+    <p class="mw" id="mW"></p>
+    <div class="mbtns" id="mB"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="logo-svg" style="width:120px;height:120px;position:relative;">
+      <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" style="width:120px;height:120px;">
+        <defs>
+          <radialGradient id="Lb" cx="50%" cy="45%" r="55%"><stop offset="0%" stop-color="#1a2848"/><stop offset="100%" stop-color="#060d1a"/></radialGradient>
+          <linearGradient id="Lp" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b8c8e8"/><stop offset="50%" stop-color="#f5f8ff"/><stop offset="100%" stop-color="#8898c0"/></linearGradient>
+          <linearGradient id="Lq" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#60a8ff"/><stop offset="100%" stop-color="#a060ff"/></linearGradient>
+          <filter id="Lg"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- outer ring -->
+        <circle cx="120" cy="120" r="115" fill="url(#Lb)"/>
+        <circle cx="120" cy="120" r="113" fill="none" stroke="url(#Lp)" stroke-width="1.5" filter="url(#Lg)"/>
+        <!-- spinning dashed ring -->
+        <circle cx="120" cy="120" r="100" fill="none" stroke="url(#Lq)" stroke-width="1.5" stroke-dasharray="12 8" opacity=".5">
+          <animateTransform attributeName="transform" type="rotate" from="0 120 120" to="360 120 120" dur="8s" repeatCount="indefinite"/>
+        </circle>
+        <!-- ? mark -->
+        <text x="120" y="148" text-anchor="middle" font-family="Georgia,serif" font-size="110" font-weight="bold"
+              fill="url(#Lq)" filter="url(#glow)" opacity=".9">?</text>
+        <!-- pulse ring -->
+        <circle cx="120" cy="120" r="90" fill="none" stroke="rgba(100,160,255,.3)" stroke-width="2">
+          <animate attributeName="r" values="85;105;85" dur="2.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values=".4;0;.4" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+    <h1>DEWAN 69</h1>
+    <p class="sub">IBTIDA WITTAYA SCHOOL — STUDENT COUNCIL LOGO VOTE</p>
+    <div class="divl"></div>
+    <p class="tag">เลือกโลโก้สภานักเรียนที่คุณชอบ &nbsp;•&nbsp; 1 คน 1 โหวต</p>
+  </div>
+
+  <div class="live"><div class="dot"></div><span>LIVE RESULTS</span><span>•</span><span id="upd">กำลังโหลด...</span></div>
+  <div class="notice" id="notice">✓ คุณได้โหวตโลโก้แล้ว — ขอบคุณที่ร่วมโหวต 🙏</div>
+
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-box" id="countdownBox" style="display:none;">
+    <div class="cd-label">⏳ ปิดรับโหวตใน</div>
+    <div class="cd-timer">
+      <div class="cd-unit"><span class="cd-num" id="cdD">00</span><span class="cd-lbl">วัน</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cdH">00</span><span class="cd-lbl">ชั่วโมง</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cdM">00</span><span class="cd-lbl">นาที</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit"><span class="cd-num" id="cdS">00</span><span class="cd-lbl">วินาที</span></div>
+    </div>
+  </div>
+
+  <!-- LOGO PANEL (ทุกคน) -->
+  <div class="adm-toggle">
+    <button onclick="toggleLogoPanel()">🖼️ &nbsp;จัดการโลโก้</button>
+  </div>
+  <div class="adm-panel" id="logoPanel">
+    <p class="adm-title">📁 อัปโหลดโลโก้</p>
+    <div class="uzone" id="uzone" onclick="document.getElementById('fi').click()">
+      <input type="file" id="fi" accept="image/*" multiple onchange="handleFiles(this.files)">
+      <p><strong>คลิกเพื่อเลือกโลโก้</strong> หรือลากมาวางที่นี่<br><span style="font-size:.7rem">รองรับหลายรูปพร้อมกัน • รูปจะจับคู่กับชื่อตามลำดับ</span></p>
+    </div>
+    <div class="prev-grid" id="prevGrid"></div>
+    <div id="nameList" style="display:none;"></div>
+    <p class="adm-hint">💡 ใส่ชื่อโลโก้ → อัปโหลดรูป → กด "บันทึก"</p>
+    <button class="btn-apply" onclick="applyPhotos()">✓ บันทึกและแสดงผล</button>
+  </div>
+
+  <!-- ADMIN PANEL (ต้องใส่รหัส) -->
+  <div class="adm-panel" id="admPanel">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <span class="adm-title" style="margin-bottom:0;">🔐 Admin Panel</span>
+      <button class="adm-lock-btn" style="width:auto;margin:0;padding:5px 14px;" onclick="lockAdm()">🔒 ออก</button>
+    </div>
+    <p class="adm-title">⏰ จำกัดเวลาโหวต</p>
+    <div class="adm-time-row">
+      <label>ปิดโหวตเวลา</label>
+      <input type="datetime-local" class="adm-time-in" id="timeLimitIn">
+      <button class="btn-set-time" onclick="setTimeLimit()">ตั้งเวลา</button>
+      <button class="btn-set-time" style="background:rgba(180,50,50,.5);" onclick="clearTimeLimit()">ลบ</button>
+    </div>
+    <p class="adm-title" style="margin-top:14px;">⚠️ รีเซ็ต</p>
+    <button class="btn-reset" onclick="resetVotes()">🗑️ รีเซ็ตโหวตทั้งหมด</button>
+  </div>
+
+  <p class="sec" id="secLbl">— กำลังโหลด —</p>
+  <div class="cgrid" id="grid"></div>
+
+  <div class="results">
+    <div class="rtop">
+      <span class="rtitle">📊 ผลโหวตเรียลไทม์</span>
+      <span class="rtotal">รวม <b id="tot">0</b> โหวต</span>
+    </div>
+    <div class="pie-wrap">
+      <canvas id="pieCanvas" class="pie-svg" width="140" height="140"></canvas>
+      <div class="pie-legend" id="pieLegend"></div>
+    </div>
+    <div id="chart"></div>
+    <button class="btn-reveal" onclick="doReveal()">🎰 ลุ้นประกาศผลผู้ชนะ</button>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const LK_VOTED='iws69_voted', LK_MYID='iws69_myid', LK_PHOTOS='iws69_photos';
+
+// ── Firebase config ──
+const firebaseConfig = {
+  apiKey: "AIzaSyDjE0PtinOst9bFtaSf7ijp7ahbQV7dEH8",
+  authDomain: "dewan69-ba788.firebaseapp.com",
+  databaseURL: "https://dewan69-ba788-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "dewan69-ba788",
+  storageBucket: "dewan69-ba788.firebasestorage.app",
+  messagingSenderId: "9781342645",
+  appId: "1:9781342645:web:b2a1e78f211761203969fc"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+
+let photos=[], candNames=[], candidates=[], votes={};
+let hasVoted=false, myVoteId=null, pendingId=null, mStep=1;
+
+// ── Firebase helpers ──
+async function dbGet(){
+  try{
+    const snap = await get(ref(db,'dewan69'));
+    return snap.exists() ? snap.val() : null;
+  }catch(e){ return null; }
+}
+async function dbSet(data){
+  try{
+    await set(ref(db,'dewan69'), data);
+    return true;
+  }catch(e){ return false; }
+}
+// realtime listener
+function startRealtimeSync(){
+  onValue(ref(db,'dewan69'), snap=>{
+    if(!snap.exists()) return;
+    const d = snap.val();
+    if(d.votes){ Object.keys(d.votes).forEach(k=>{ votes[k]=d.votes[k]||0; }); }
+    const before = JSON.stringify(photos)+JSON.stringify(candNames);
+    if(d.photos && d.photos.length){ photos=d.photos; }
+    if(d.names  && d.names.length) { candNames=d.names; }
+    if(JSON.stringify(photos)+JSON.stringify(candNames) !== before) buildCandidates();
+    renderChart(); renderGrid();
+  });
+}
+
+/* ── LOGOS ── */
+function buildCandidates(){
+  const n=Math.max(photos.length, candNames.filter(n=>n&&n.trim()).length, 1);
+  candidates=Array.from({length:n},(_,i)=>({
+    id:i+1,
+    name:candNames[i]&&candNames[i].trim()?candNames[i].trim():`โลโก้หมายเลข ${i+1}`,
+    photo:photos[i]||null
+  }));
+  candidates.forEach(c=>{if(!(c.id in votes))votes[c.id]=0;});
+}
+
+function renderNameList(){
+  const n = Math.max(candNames.length, 1);
+  document.getElementById('nameList').innerHTML = Array.from({length:n},(_,i)=>`
+    <div class="name-row">
+      <div class="name-row-num">${i+1}</div>
+      <input class="name-row-input" type="text"
+        placeholder="ชื่อโลโก้หมายเลข ${i+1}..."
+        value="${candNames[i]||''}"
+        oninput="candNames[${i}]=this.value"
+        maxlength="40">
+      ${n>1?`<button class="name-row-del" onclick="delSlot(${i})">✕</button>`:''}
+    </div>`).join('');
+}
+
+function addSlot(){
+  candNames.push('');
+  renderNameList();
+}
+
+function delSlot(i){
+  candNames.splice(i,1);
+  if(photos[i]) photos.splice(i,1);
+  renderNameList();
+  renderPrev();
+}
+
+/* ── ADMIN ── */
+/* ── ADMIN PIN ── */
+const ADM_PIN = '8268';
+let admUnlocked = false;
+
+function promptAdmPin(){
+  if(admUnlocked){
+    document.getElementById('logoPanel').classList.remove('open');
+    document.getElementById('admPanel').classList.toggle('open');
+    return;
+  }
+  showPinModal();
+}
+
+function showPinModal(){
+  document.getElementById('pinModal').classList.add('open');
+  document.getElementById('pinInput').value='';
+  setTimeout(()=>document.getElementById('pinInput').focus(),100);
+}
+
+function closePinModal(){
+  document.getElementById('pinModal').classList.remove('open');
+}
+
+function submitPin(){
+  const val = document.getElementById('pinInput').value.trim();
+  if(val === ADM_PIN){
+    admUnlocked = true;
+    closePinModal();
+    document.getElementById('logoPanel').classList.remove('open');
+    document.getElementById('admPanel').classList.add('open');
+    showToast('✓ เข้าสู่ระบบ Admin แล้ว','ok');
+  } else {
+    document.getElementById('pinError').style.display='block';
+    document.getElementById('pinInput').value='';
+    document.getElementById('pinInput').focus();
+    setTimeout(()=>document.getElementById('pinError').style.display='none', 2000);
+  }
+}
+
+function lockAdm(){
+  admUnlocked = false;
+  document.getElementById('admPanel').classList.remove('open');
+  showToast('🔒 ออกจากระบบ Admin แล้ว','');
+}
+
+function toggleLogoPanel(){
+  document.getElementById('logoPanel').classList.toggle('open');
+  document.getElementById('admPanel').classList.remove('open');
+}
+function toggleAdm(){
+  if(!admUnlocked){ promptAdmPin(); return; }
+  document.getElementById('admPanel').classList.toggle('open');
+  document.getElementById('logoPanel').classList.remove('open');
+}
+
+// compress รูปให้เล็กลงอัตโนมัติก่อน save (max 400px, quality 0.7)
+function compressImage(dataUrl, maxSize=400, quality=0.72){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      let w=img.width, h=img.height;
+      if(w>h){ if(w>maxSize){h=Math.round(h*maxSize/w);w=maxSize;} }
+      else    { if(h>maxSize){w=Math.round(w*maxSize/h);h=maxSize;} }
+      const c=document.createElement('canvas');
+      c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(c.toDataURL('image/jpeg',quality));
+    };
+    img.src=dataUrl;
+  });
+}
+
+function handleFiles(files){
+  Array.from(files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=async e=>{
+      const compressed = await compressImage(e.target.result);
+      photos.push(compressed);
+      if(photos.length>candNames.length) candNames.push('');
+      renderPrev();
+    };
+    r.readAsDataURL(f);
+  });
+}
+
+const uz=document.getElementById('uzone');
+uz.addEventListener('dragover',e=>{e.preventDefault();uz.style.borderColor='rgba(74,124,200,.7)';});
+uz.addEventListener('dragleave',()=>uz.style.borderColor='rgba(74,124,200,.3)');
+uz.addEventListener('drop',e=>{
+  e.preventDefault();uz.style.borderColor='rgba(74,124,200,.3)';
+  handleFiles(e.dataTransfer.files);
+});
+
+function renderPrev(){
+  document.getElementById('prevGrid').innerHTML=photos.map((s,i)=>`
+    <div class="prev-item">
+      <img src="${s}">
+      <button class="rx" onclick="rmPhoto(${i})">✕</button>
+      <div class="pn">เบอร์ ${i+1}</div>
+      <input class="name-in" type="text"
+        placeholder="ชื่อโลโก้..."
+        value="${candNames[i]||''}"
+        oninput="candNames[${i}]=this.value"
+        maxlength="30">
+    </div>`).join('')+
+    `<div class="prev-item" style="display:flex;align-items:center;justify-content:center;width:120px;min-height:100px;">
+      <button onclick="addPhotoSlot()" style="width:58px;height:58px;border-radius:50%;border:2px dashed rgba(74,124,200,.4);background:rgba(74,124,200,.07);color:var(--muted);font-size:1.4rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;" onmouseover="this.style.borderColor='rgba(74,124,200,.75)';this.style.color='var(--silver2)'" onmouseout="this.style.borderColor='rgba(74,124,200,.4)';this.style.color='var(--muted)'">+</button>
+    </div>`;
+}
+
+function addPhotoSlot(){
+  candNames.push('');
+  photos.push('');
+  renderPrev();
+}
+
+function rmPhoto(i){photos.splice(i,1);candNames.splice(i,1);renderPrev();}
+
+async function applyPhotos(){
+  document.querySelectorAll('.name-in').forEach((el,i)=>{ if(i<photos.length) candNames[i]=el.value; });
+  for(let i=photos.length-1;i>=0;i--){ if(!photos[i]){ photos.splice(i,1); candNames.splice(i,1); } }
+  showToast('⏳ กำลังบันทึก...','');
+  const d = await dbGet() || {votes:{}, photos:[], names:[]};
+  d.photos = photos;
+  d.names  = candNames;
+  const ok = await dbSet(d);
+  buildCandidates();renderGrid();renderChart();
+  document.getElementById('logoPanel').classList.remove('open');
+  showToast(ok ? '✓ บันทึกแล้ว! ทุกคนจะเห็นโลโก้นี้' : '⚠️ บันทึกไม่สำเร็จ ลองใหม่','ok');
+}
+
+/* ── STORAGE ── */
+async function saveVoteFor(id){
+  const d = await dbGet() || {votes:{}, photos:[], names:[]};
+  if(!d.votes) d.votes={};
+  d.votes[id] = (d.votes[id]||0)+1;
+  await dbSet(d);
+  votes[id] = d.votes[id];
+}
+function checkLocal(){
+  if(localStorage.getItem(LK_VOTED)){hasVoted=true;myVoteId=parseInt(localStorage.getItem(LK_MYID));}
+}
+
+/* ── SIL (logo placeholder) ── */
+function sil(s=44){return `<div class="sil" style="width:${s}px;height:${s}px;"><svg width="${s}" height="${s}" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="34" r="20" fill="rgba(180,200,240,.28)"/><path d="M15 95 Q15 62 50 62 Q85 62 85 95" fill="rgba(180,200,240,.22)"/></svg></div>`;}
+
+/* ── GRID ── */
+function renderGrid(){
+  document.getElementById('secLbl').textContent=candidates.length?'— เลือกโลโก้ —':'— ยังไม่มีโลโก้ —';
+  document.getElementById('grid').innerHTML=candidates.map(c=>{
+    const mine=hasVoted&&myVoteId===c.id, off=hasVoted&&!mine;
+    const ph=c.photo?`<img src="${c.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;">`:`${sil(96)}`;
+    return `<div class="ccard ${mine?'mine':''} ${off?'off':''}" onclick="${!hasVoted?`openM(${c.id})`:''}">
+      <div class="pring" style="width:96px;height:96px;">${ph}<div class="pring-b"></div><div class="nbadge">${c.id}</div></div>
+      <div class="cname">${c.name}</div>
+      ${mine?`<div class="bdgv">✓ คุณเลือกโลโก้นี้</div>`:off?`<div style="font-size:.72rem;color:var(--muted)">ไม่สามารถเปลี่ยนได้</div>`:`<button class="btnv" onclick="event.stopPropagation();openM(${c.id})">โหวต</button>`}
+    </div>`;
+  }).join('');
+}
+
+/* ── CHART ── */
+function renderChart(){
+  const total=Object.values(votes).reduce((a,b)=>a+b,0);
+  document.getElementById('tot').textContent=total;
+  // maxV: only consider actual votes (not 0-baseline)
+  const allV=candidates.map(c=>votes[c.id]||0);
+  const maxV=Math.max(...allV, 0);
+  document.getElementById('chart').innerHTML=candidates.map(c=>{
+    const v=votes[c.id]||0;
+    const pct=total>0?Math.round(v/total*100):0;
+    // leader = has votes AND is highest
+    const lead=v>0 && v===maxV && total>0;
+    const myChoice=hasVoted && myVoteId===c.id;
+    const mini=c.photo?`<div class="mini"><img src="${c.photo}"></div>`:`<div class="msil">${sil(28)}</div>`;
+    // bar min width so 0 votes shows clearly as empty
+    const barW=pct>0?Math.max(pct,3):0;
+    return `<div class="rrow">
+      <div class="rmeta">
+        <div class="rleft">
+          ${mini}
+          <span class="rname">${c.name}</span>
+          ${lead?`<span style="font-size:.65rem;background:rgba(74,124,200,.2);border:1px solid rgba(74,124,200,.4);border-radius:8px;padding:2px 8px;color:#80b8ff;margin-left:6px;">🏆 นำอยู่</span>`:''}
+          ${myChoice?`<span style="font-size:.65rem;background:rgba(76,218,122,.15);border:1px solid rgba(76,218,122,.35);border-radius:8px;padding:2px 8px;color:var(--green);margin-left:6px;">✓ คุณโหวต</span>`:''}
+        </div>
+        <span class="rct"><b>${v}</b> โหวต (${pct}%)</span>
+      </div>
+      <div class="track">
+        <div class="fill ${lead?'lead':'rest'}" style="width:${barW}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+  const n=new Date();
+  document.getElementById('upd').textContent=`อัปเดต ${n.getHours().toString().padStart(2,'0')}:${n.getMinutes().toString().padStart(2,'0')}:${n.getSeconds().toString().padStart(2,'0')} น.`;
+  renderPie();renderPieLegend();checkWinner();
+}
+
+/* ── MODAL ── */
+function openM(id){if(hasVoted)return;pendingId=id;mStep=1;renderM();document.getElementById('ov').classList.add('open');}
+function renderM(){
+  const c=candidates.find(x=>x.id===pendingId);
+  document.getElementById('d1').classList.toggle('on',mStep>=1);
+  document.getElementById('d2').classList.toggle('on',mStep>=2);
+  document.getElementById('mPh').innerHTML=c.photo?`<div class="mph"><img src="${c.photo}"></div>`:`<div class="mph-sil">${sil(48)}</div>`;
+  document.getElementById('mN').textContent=c.name;
+  if(mStep===1){
+    document.getElementById('mH').textContent='คุณต้องการโหวตให้';
+    document.getElementById('mT').textContent='ตรวจสอบโลโก้ก่อนดำเนินการต่อ';
+    document.getElementById('mW').textContent='';
+    document.getElementById('mB').innerHTML=`<button class="bcl" onclick="closeM()">ยกเลิก</button><button class="bnx" onclick="nxt()">ถัดไป →</button>`;
+  } else {
+    document.getElementById('mH').textContent='ยืนยันอีกครั้ง';
+    document.getElementById('mT').textContent='แน่ใจหรือไม่ว่าต้องการโหวตให้โลโก้นี้?';
+    document.getElementById('mW').textContent='⚠️ ไม่สามารถเปลี่ยนแปลงได้ภายหลัง';
+    document.getElementById('mB').innerHTML=`<button class="bcl" onclick="prv()">← ย้อนกลับ</button><button class="bok" onclick="confirmVote()">ยืนยันโหวต ✓</button>`;
+  }
+}
+function nxt(){mStep=2;renderM();}
+function prv(){mStep=1;renderM();}
+function closeM(){document.getElementById('ov').classList.remove('open');pendingId=null;mStep=1;}
+
+/* ── CONFIRM ── */
+async function confirmVote(){
+  if(!pendingId||hasVoted)return;
+  const id=pendingId;
+  closeM();
+  hasVoted=true; myVoteId=id;
+  localStorage.setItem(LK_VOTED,'1');
+  localStorage.setItem(LK_MYID,String(id));
+  // atomic save: read latest from server, increment, write back
+  await saveVoteFor(id);
+  document.getElementById('notice').classList.add('show');
+  renderGrid(); renderChart();
+  showToast('✓ โหวตเรียบร้อย ขอบคุณ!','ok');
+  launchConfetti();
+}
+
+/* ── TOAST ── */
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className=`toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ── INIT ── */
+async function init(){
+  checkLocal();
+  await loadDeadline();
+  startCountdown();
+  // โหลดข้อมูลเริ่มต้นจาก Firebase ครั้งแรก
+  const d = await dbGet();
+  if(d){
+    if(d.votes) Object.keys(d.votes).forEach(k=>{ votes[k]=d.votes[k]||0; });
+    if(d.photos && d.photos.length){ photos=d.photos; }
+    if(d.names  && d.names.length) { candNames=d.names; }
+  }
+  buildCandidates();
+  renderPrev();
+  if(hasVoted)document.getElementById('notice').classList.add('show');
+  renderGrid();renderChart();
+  startRealtimeSync(); // เปิด realtime listener แทน setInterval
+}
+
+document.getElementById('ov').addEventListener('click',e=>{if(e.target===document.getElementById('ov'))closeM();});
+init();
+
+/* ── THEME ── */
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  document.getElementById('themeBtn').textContent = document.body.classList.contains('light') ? '🌙' : '☀️';
+  localStorage.setItem('iws69_theme', document.body.classList.contains('light') ? 'light' : 'dark');
+}
+(function(){
+  if(localStorage.getItem('iws69_theme')==='light'){
+    document.body.classList.add('light');
+    const b=document.getElementById('themeBtn');
+    if(b) b.textContent='☀️';
+  }
+})();
+
+/* ── COUNTDOWN ── */
+const LK_DEADLINE = 'iws69_deadline';
+let deadlineTs = null;
+let cdInterval = null;
+
+async function loadDeadline(){
+  const d = await dbGet();
+  if(d && d.deadline){ deadlineTs = d.deadline; return; }
+  const s = localStorage.getItem(LK_DEADLINE);
+  if(s) deadlineTs = parseInt(s);
+}
+async function saveDeadline(ts){
+  localStorage.setItem(LK_DEADLINE, String(ts)); deadlineTs = ts;
+  const d = await dbGet() || {votes:{}, photos:[], names:[]};
+  d.deadline = ts;
+  await dbSet(d);
+}
+async function clearDeadline(){
+  localStorage.removeItem(LK_DEADLINE); deadlineTs = null;
+  const d = await dbGet() || {votes:{}, photos:[], names:[]};
+  delete d.deadline;
+  await dbSet(d);
+}
+
+async function setTimeLimit(){
+  const val = document.getElementById('timeLimitIn').value;
+  if(!val){ showToast('กรุณาเลือกวันเวลา',''); return; }
+  const ts = new Date(val).getTime();
+  if(isNaN(ts)||ts<=Date.now()){ showToast('กรุณาเลือกเวลาในอนาคต',''); return; }
+  await saveDeadline(ts);
+  startCountdown();
+  showToast('✓ ตั้งเวลาปิดโหวตแล้ว','ok');
+}
+async function clearTimeLimit(){
+  await clearDeadline();
+  if(cdInterval) clearInterval(cdInterval);
+  document.getElementById('countdownBox').style.display='none';
+  showToast('ลบเวลาปิดโหวตแล้ว','');
+}
+
+function startCountdown(){
+  if(cdInterval) clearInterval(cdInterval);
+  if(!deadlineTs) return;
+  const box = document.getElementById('countdownBox');
+  box.style.display='block';
+  function tick(){
+    const diff = deadlineTs - Date.now();
+    if(diff <= 0){
+      box.classList.add('ended');
+      document.getElementById('cdD').textContent='00';
+      document.getElementById('cdH').textContent='00';
+      document.getElementById('cdM').textContent='00';
+      document.getElementById('cdS').textContent='00';
+      // lock voting
+      if(!hasVoted){
+        hasVoted=true;
+        renderGrid();
+        showToast('⏰ หมดเวลาโหวตแล้ว','');
+      }
+      clearInterval(cdInterval);
+      return;
+    }
+    box.classList.remove('ended');
+    const d=Math.floor(diff/86400000);
+    const h=Math.floor((diff%86400000)/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    document.getElementById('cdD').textContent=String(d).padStart(2,'0');
+    document.getElementById('cdH').textContent=String(h).padStart(2,'0');
+    document.getElementById('cdM').textContent=String(m).padStart(2,'0');
+    document.getElementById('cdS').textContent=String(s).padStart(2,'0');
+  }
+  tick();
+  cdInterval=setInterval(tick,1000);
+}
+
+/* ── RESET VOTES (Admin) ── */
+async function resetVotes(){
+  if(!confirm('⚠️ รีเซ็ตโหวตทั้งหมด? ไม่สามารถกู้คืนได้')) return;
+  votes={};
+  const d = await dbGet() || {votes:{}, photos:[], names:[]};
+  d.votes = {};
+  await dbSet(d);
+  localStorage.removeItem(LK_VOTED);
+  localStorage.removeItem(LK_MYID);
+  hasVoted=false; myVoteId=null;
+  document.getElementById('notice').classList.remove('show');
+  renderGrid(); renderChart();
+  showToast('✓ รีเซ็ตโหวตแล้ว','ok');
+}
+
+/* ── CONFETTI ── */
+function launchConfetti(){
+  const canvas=document.getElementById('confetti-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const pieces=[];
+  const colors=['#4a7cc8','#d4a94e','#4cda7a','#f08080','#a060ff','#60d8ff','#fff'];
+  for(let i=0;i<120;i++){
+    pieces.push({
+      x:Math.random()*canvas.width, y:-10-Math.random()*200,
+      w:6+Math.random()*8, h:3+Math.random()*5,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      rot:Math.random()*360, rotV:(Math.random()-0.5)*8,
+      vx:(Math.random()-0.5)*4, vy:2+Math.random()*4, alpha:1
+    });
+  }
+  let frame;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.save(); ctx.globalAlpha=p.alpha;
+      ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.color;
+      ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+      p.x+=p.vx; p.y+=p.vy; p.rot+=p.rotV; p.vy+=0.06;
+      if(p.y>canvas.height) p.alpha-=0.04;
+    });
+    if(pieces.some(p=>p.alpha>0)) frame=requestAnimationFrame(draw);
+    else { ctx.clearRect(0,0,canvas.width,canvas.height); }
+  }
+  draw();
+  setTimeout(()=>{cancelAnimationFrame(frame);ctx.clearRect(0,0,canvas.width,canvas.height);},5000);
+}
+
+/* ── REVEAL ── */
+function doReveal(){
+  const total=Object.values(votes).reduce((a,b)=>a+b,0);
+  if(total===0){showToast('ยังไม่มีโหวต','');return;}
+  const ov=document.getElementById('revealOv');
+  const inner=document.getElementById('revealInner');
+  const result=document.getElementById('revealResult');
+  inner.style.display='block'; result.style.display='none';
+  ov.classList.add('active');
+
+  // drum roll 2.5s then reveal
+  setTimeout(()=>{
+    // find winner
+    const winner=candidates.reduce((a,b)=>(votes[b.id]||0)>(votes[a.id]||0)?b:a);
+    const wv=votes[winner.id]||0;
+    const pct=total>0?Math.round(wv/total*100):0;
+    const ph=document.getElementById('rrPhoto');
+    ph.innerHTML=winner.photo?`<img src="${winner.photo}">`:`<div style="width:110px;height:110px;background:var(--navy4);border-radius:50%;display:flex;align-items:center;justify-content:center;">${sil(110)}</div>`;
+    document.getElementById('rrName').textContent=winner.name;
+    document.getElementById('rrPct').textContent=`${wv} โหวต (${pct}%)`;
+    inner.style.display='none';
+    result.style.display='block';
+    launchConfetti();
+  },2500);
+}
+function closeReveal(){ document.getElementById('revealOv').classList.remove('active'); }
+
+/* ── PIE CHART ── */
+const PIE_COLORS=['#4a7cc8','#d4a94e','#4cda7a','#f08080','#a060ff','#60d8ff','#f4b942','#70e8c0'];
+function renderPie(){
+  const total=Object.values(votes).reduce((a,b)=>a+b,0);
+  const canvas=document.getElementById('pieCanvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const sz=canvas.width;
+  ctx.clearRect(0,0,sz,sz);
+  if(total===0){
+    ctx.beginPath(); ctx.arc(sz/2,sz/2,sz/2-4,0,Math.PI*2);
+    ctx.fillStyle='rgba(74,124,200,.08)'; ctx.fill();
+    ctx.strokeStyle='rgba(74,124,200,.2)'; ctx.lineWidth=2; ctx.stroke();
+    return;
+  }
+  let start=0;
+  candidates.forEach((c,i)=>{
+    const v=votes[c.id]||0; if(!v)return;
+    const slice=(v/total)*Math.PI*2;
+    ctx.beginPath(); ctx.moveTo(sz/2,sz/2);
+    ctx.arc(sz/2,sz/2,sz/2-4,start,start+slice);
+    ctx.fillStyle=PIE_COLORS[i%PIE_COLORS.length]; ctx.fill();
+    ctx.strokeStyle='rgba(7,13,26,.6)'; ctx.lineWidth=2; ctx.stroke();
+    start+=slice;
+  });
+  // center hole
+  ctx.beginPath(); ctx.arc(sz/2,sz/2,sz/4,0,Math.PI*2);
+  ctx.fillStyle='var(--navy2)'; ctx.fill();
+}
+
+function renderPieLegend(){
+  const total=Object.values(votes).reduce((a,b)=>a+b,0);
+  document.getElementById('pieLegend').innerHTML=candidates.map((c,i)=>{
+    const v=votes[c.id]||0;
+    const pct=total>0?Math.round(v/total*100):0;
+    return `<div class="pie-item">
+      <div class="pie-dot" style="background:${PIE_COLORS[i%PIE_COLORS.length]}"></div>
+      <span>${c.name} — <b>${pct}%</b></span>
+    </div>`;
+  }).join('');
+}
+
+/* ── WINNER CHECK ── */
+function checkWinner(){
+  const total=Object.values(votes).reduce((a,b)=>a+b,0);
+  const needed=candidates.length*1; // show winner when there are votes
+  if(total===0||!hasVoted) return;
+  const winner=candidates.reduce((a,b)=>(votes[b.id]||0)>(votes[a.id]||0)?b:a);
+  const wv=votes[winner.id]||0;
+  const pct=total>0?Math.round(wv/total*100):0;
+  if(wv>0){
+    document.getElementById('winnerBanner').classList.add('show');
+    document.getElementById('winnerName').textContent=winner.name;
+    document.getElementById('winnerPct').textContent=`${wv} โหวต • ${pct}% ของทั้งหมด`;
+  }
+}
+
+
+// ── expose functions to global scope (required for type="module") ──
+Object.assign(window,{
+  toggleLogoPanel,toggleAdm,promptAdmPin,submitPin,closePinModal,lockAdm,
+  handleFiles,addPhotoSlot,rmPhoto,addSlot,delSlot,applyPhotos,
+  openM,closeM,nxt,prv,confirmVote,
+  doReveal,closeReveal,
+  toggleTheme,
+  setTimeLimit,clearTimeLimit,
+  resetVotes,
+});
+</script>
+</body>
+</html>
