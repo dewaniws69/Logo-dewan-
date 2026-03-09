@@ -511,7 +511,8 @@ body.light .toast{background:#d3daea;}
 </div>
 
 <script>
-const SK_VOTES='iws69_votes', LK_VOTED='iws69_voted', LK_MYID='iws69_myid', LK_PHOTOS='iws69_photos';
+const SK_VOTES='iws69_votes', SK_PHOTOS='iws69_photos_shared', SK_NAMES='iws69_names_shared',
+      LK_VOTED='iws69_voted', LK_MYID='iws69_myid', LK_PHOTOS='iws69_photos';
 
 let photos=[], candNames=[], candidates=[], votes={};
 let hasVoted=false, myVoteId=null, pendingId=null, mStep=1;
@@ -654,7 +655,7 @@ function addPhotoSlot(){
 
 function rmPhoto(i){photos.splice(i,1);candNames.splice(i,1);renderPrev();}
 
-function applyPhotos(){
+async function applyPhotos(){
   // read latest name values from name-in inputs (primary source)
   document.querySelectorAll('.name-in').forEach((el,i)=>{ if(i<photos.length) candNames[i]=el.value; });
   // remove empty-photo placeholder slots
@@ -663,6 +664,11 @@ function applyPhotos(){
     localStorage.setItem(LK_PHOTOS,JSON.stringify(photos));
     localStorage.setItem('iws69_names',JSON.stringify(candNames));
   }catch(e){}
+  // บันทึกรูปและชื่อขึ้น shared storage ให้ทุกคนเห็น
+  try{
+    await window.storage.set(SK_PHOTOS, JSON.stringify(photos), true);
+    await window.storage.set(SK_NAMES,  JSON.stringify(candNames), true);
+  }catch(e){ console.warn('shared storage save failed', e); }
   buildCandidates();renderGrid();renderChart();
   document.getElementById('logoPanel').classList.remove('open');
   showToast('✓ บันทึกแล้ว!','ok');
@@ -695,9 +701,20 @@ async function saveVoteFor(id){
 }
 function checkLocal(){
   if(localStorage.getItem(LK_VOTED)){hasVoted=true;myVoteId=parseInt(localStorage.getItem(LK_MYID));}
+  // โหลดรูป/ชื่อจาก localStorage ไว้ก่อน (fallback)
   try{
     const p=localStorage.getItem(LK_PHOTOS);if(p)photos=JSON.parse(p);
     const nm=localStorage.getItem('iws69_names');if(nm)candNames=JSON.parse(nm);
+  }catch(e){}
+}
+
+// โหลดรูปและชื่อจาก shared storage (ให้ทุกคนเห็นโลโก้ที่ admin ตั้งไว้)
+async function loadSharedPhotos(){
+  try{
+    const rp = await window.storage.get(SK_PHOTOS, true);
+    const rn = await window.storage.get(SK_NAMES,  true);
+    if(rp && rp.value){ photos    = JSON.parse(rp.value); }
+    if(rn && rn.value){ candNames = JSON.parse(rn.value); }
   }catch(e){}
 }
 
@@ -810,6 +827,7 @@ async function init(){
   loadDeadline();
   startCountdown();
   await loadVotes();
+  await loadSharedPhotos(); // โหลดโลโก้จาก shared storage
   buildCandidates();
   renderPrev();
   if(hasVoted)document.getElementById('notice').classList.add('show');
