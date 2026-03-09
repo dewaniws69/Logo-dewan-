@@ -824,10 +824,10 @@ async function poll(){await loadVotes();renderChart();renderGrid();}
 /* ── INIT ── */
 async function init(){
   checkLocal();
-  loadDeadline();
+  await loadDeadline();
   startCountdown();
   await loadVotes();
-  await loadSharedPhotos(); // โหลดโลโก้จาก shared storage
+  await loadSharedPhotos();
   buildCandidates();
   renderPrev();
   if(hasVoted)document.getElementById('notice').classList.add('show');
@@ -854,27 +854,38 @@ function toggleTheme(){
 
 /* ── COUNTDOWN ── */
 const LK_DEADLINE = 'iws69_deadline';
+const SK_DEADLINE  = 'iws69_deadline_shared';
 let deadlineTs = null;
 let cdInterval = null;
 
-function loadDeadline(){
+async function loadDeadline(){
+  try{
+    const r = await window.storage.get(SK_DEADLINE, true);
+    if(r && r.value){ deadlineTs = parseInt(r.value); return; }
+  }catch(e){}
   const s = localStorage.getItem(LK_DEADLINE);
   if(s) deadlineTs = parseInt(s);
 }
-function saveDeadline(ts){ localStorage.setItem(LK_DEADLINE, ts); deadlineTs = ts; }
-function clearDeadline(){ localStorage.removeItem(LK_DEADLINE); deadlineTs = null; }
+async function saveDeadline(ts){
+  localStorage.setItem(LK_DEADLINE, String(ts)); deadlineTs = ts;
+  try{ await window.storage.set(SK_DEADLINE, String(ts), true); }catch(e){}
+}
+async function clearDeadline(){
+  localStorage.removeItem(LK_DEADLINE); deadlineTs = null;
+  try{ await window.storage.delete(SK_DEADLINE, true); }catch(e){}
+}
 
-function setTimeLimit(){
+async function setTimeLimit(){
   const val = document.getElementById('timeLimitIn').value;
   if(!val){ showToast('กรุณาเลือกวันเวลา',''); return; }
   const ts = new Date(val).getTime();
   if(isNaN(ts)||ts<=Date.now()){ showToast('กรุณาเลือกเวลาในอนาคต',''); return; }
-  saveDeadline(ts);
+  await saveDeadline(ts);
   startCountdown();
   showToast('✓ ตั้งเวลาปิดโหวตแล้ว','ok');
 }
-function clearTimeLimit(){
-  clearDeadline();
+async function clearTimeLimit(){
+  await clearDeadline();
   if(cdInterval) clearInterval(cdInterval);
   document.getElementById('countdownBox').style.display='none';
   showToast('ลบเวลาปิดโหวตแล้ว','');
