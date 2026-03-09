@@ -664,14 +664,28 @@ async function applyPhotos(){
     localStorage.setItem(LK_PHOTOS,JSON.stringify(photos));
     localStorage.setItem('iws69_names',JSON.stringify(candNames));
   }catch(e){}
-  // บันทึกรูปและชื่อขึ้น shared storage ให้ทุกคนเห็น
+  // บันทึกขึ้น shared storage — ถ้าไม่สำเร็จให้แจ้ง user
+  let savedOk = false;
   try{
-    await window.storage.set(SK_PHOTOS, JSON.stringify(photos), true);
-    await window.storage.set(SK_NAMES,  JSON.stringify(candNames), true);
+    const photosStr = JSON.stringify(photos);
+    const namesStr  = JSON.stringify(candNames);
+    // เช็คขนาด: shared storage limit ~5MB per key
+    const sizeMB = (photosStr.length * 2) / 1024 / 1024;
+    if(sizeMB > 4.5){
+      showToast(`⚠️ รูปภาพรวมกันใหญ่เกินไป (${sizeMB.toFixed(1)}MB) — ลองลดขนาดรูปก่อน`,'');
+      return;
+    }
+    const rp = await window.storage.set(SK_PHOTOS, photosStr, true);
+    const rn = await window.storage.set(SK_NAMES,  namesStr,  true);
+    if(rp && rn) savedOk = true;
   }catch(e){ console.warn('shared storage save failed', e); }
   buildCandidates();renderGrid();renderChart();
   document.getElementById('logoPanel').classList.remove('open');
-  showToast('✓ บันทึกแล้ว!','ok');
+  if(savedOk){
+    showToast('✓ บันทึกแล้ว! ทุกคนจะเห็นโลโก้นี้','ok');
+  } else {
+    showToast('⚠️ บันทึกเฉพาะเครื่องนี้ — คนอื่นอาจไม่เห็น','');
+  }
 }
 
 /* ── STORAGE ── */
@@ -819,7 +833,14 @@ function showToast(msg,type=''){
 }
 
 /* ── POLL ── */
-async function poll(){await loadVotes();renderChart();renderGrid();}
+async function poll(){
+  await loadVotes();
+  const before = JSON.stringify(photos) + JSON.stringify(candNames);
+  await loadSharedPhotos();
+  const after = JSON.stringify(photos) + JSON.stringify(candNames);
+  if(before !== after) buildCandidates(); // โลโก้เปลี่ยน → rebuild
+  renderChart();renderGrid();
+}
 
 /* ── INIT ── */
 async function init(){
